@@ -30,7 +30,7 @@ The components are of relevance for [Azure administrators](azure-tre-overview/us
 
 The Composition Service offers an abstraction over the lower-level Azure resources to allow for TRE users to provision resources in terms of workspaces and workspace services.
 
-The Composition Service exposes resources – based on above concepts – as an HTTP API where users and applications can model the desired representation of the TRE, i.e., define which workspaces should contain which workspace services.
+The Composition Service exposes resources – based on above concepts – as an HTTP API where users and applications can model the desired representation of the TRE, i.e., define which workspaces should contain which workspace services
 
 The Composition Service reconciles the desired state with the actual state by invoking Azure resource deployments.
 
