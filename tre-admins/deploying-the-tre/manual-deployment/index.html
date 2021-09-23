@@ -1,0 +1,1654 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Azure TRE">
+      
+      
+      
+        <meta name="author" content="Microsoft">
+      
+      
+        <link rel="canonical" href="https://github.com/microsoft/AzureTRE/tre-admins/deploying-the-tre/manual-deployment/">
+      
+      <link rel="icon" href="../../../assets/ms_icon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
+    
+    
+      
+        <title>Manual Deployment - Azure TRE</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8b42a75e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "7gescazz1m");
+</script>
+
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploying-azure-tre-manually" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Azure TRE" class="md-header__button md-logo" aria-label="Azure TRE" data-md-component="logo">
+      
+  <img src="../../../assets/ms_icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure TRE
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Manual Deployment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/microsoft/AzureTre/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Azure TRE" class="md-nav__button md-logo" aria-label="Azure TRE" data-md-component="logo">
+      
+  <img src="../../../assets/ms_icon.png" alt="logo">
+
+    </a>
+    Azure TRE
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/microsoft/AzureTre/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--container ">
+          <a href="../../..">Azure TRE Overview</a>
+          <label for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        </div>
+      
+      <nav class="md-nav" aria-label="Azure TRE Overview" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Azure TRE Overview
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../azure-tre-overview/user-roles/" class="md-nav__link">
+        User Roles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../azure-tre-overview/architecture/" class="md-nav__link">
+        Architecture
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../azure-tre-overview/networking/" class="md-nav__link">
+        Network Architecture
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_5" type="checkbox" id="__nav_1_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_1_5">
+          Shared Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Shared Services" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_5">
+          <span class="md-nav__icon md-icon"></span>
+          Shared Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../azure-tre-overview/shared-services/gitea/" class="md-nav__link">
+        Gitea (Source Mirror)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../azure-tre-overview/shared-services/nexus/" class="md-nav__link">
+        Nexus (Package Mirror)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../deployment-quickstart/" class="md-nav__link">
+        Deployment Quickstart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          TRE Admins
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="TRE Admins" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          TRE Admins
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Deploying the TRE
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Deploying the TRE" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Deploying the TRE
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../auth/" class="md-nav__link">
+        Authentication and Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bootstrapping/" class="md-nav__link">
+        Bootstrapping
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Manual Deployment
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Manual Deployment
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    Steps
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-and-create-prerequisite-resources" class="md-nav__link">
+    Bootstrap and create prerequisite resources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-variables" class="md-nav__link">
+    Configure variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy" class="md-nav__link">
+    Deploy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#details-of-deployment-and-infrastructure" class="md-nav__link">
+    Details of deployment and infrastructure
+  </a>
+  
+    <nav class="md-nav" aria-label="Details of deployment and infrastructure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#management-infrastructure" class="md-nav__link">
+    Management Infrastructure
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-the-back-end-state" class="md-nav__link">
+    Bootstrap the back-end state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#management-resource-deployment" class="md-nav__link">
+    Management Resource Deployment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-push-docker-images" class="md-nav__link">
+    Build and push Docker images
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-the-azure-tre-deployment" class="md-nav__link">
+    Access the Azure TRE deployment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publishing-and-registering-the-base-workspace-bundle" class="md-nav__link">
+    Publishing and registering the base workspace bundle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-base-workspace" class="md-nav__link">
+    Creating a base workspace
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deleting-the-azure-tre-deployment" class="md-nav__link">
+    Deleting the Azure TRE deployment
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflows/" class="md-nav__link">
+        Workflow Deployment
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting-guide/" class="md-nav__link">
+        Troubleshooting Guide
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          TRE Developers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="TRE Developers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          TRE Developers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tre-developers/dev-environment/" class="md-nav__link">
+        Dev Environment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tre-developers/api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tre-developers/resource-processor/" class="md-nav__link">
+        Resource Processor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tre-developers/end-to-end-tests/" class="md-nav__link">
+        End to End Tests
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          TRE Workspace Authors
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="TRE Workspace Authors" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          TRE Workspace Authors
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tre-workspace-authors/authoring-workspace-templates/" class="md-nav__link">
+        Authoring Workspace Templates
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tre-workspace-authors/firewall-rules/" class="md-nav__link">
+        Firewall Rules
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tre-workspace-authors/registering-workspace-templates/" class="md-nav__link">
+        Registering Workspace Templates
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Workspace Templates
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Workspace Templates" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Workspace Templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1" type="checkbox" id="__nav_6_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6_1">
+          Workspaces
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Workspaces" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          Workspaces
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspaces/base/" class="md-nav__link">
+        Base
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspaces/azure-ml-dev-test-labs/" class="md-nav__link">
+        Azure ML DevTest Labs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspaces/inner-eye-deep-learning/" class="md-nav__link">
+        InnerEye Deep Learning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspaces/inner-eye-deep-learning-inferencing/" class="md-nav__link">
+        InnerEye Inferencing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6_2">
+          Workspace Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Workspace Services" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Workspace Services
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspace-services/azure-ml/" class="md-nav__link">
+        Azure ML
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspace-services/dev-test-labs/" class="md-nav__link">
+        DevTest Labs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspace-services/guacamole/" class="md-nav__link">
+        Guacamole
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspace-services/inner-eye-deep-learning/" class="md-nav__link">
+        InnerEye Deep Learning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/workspace-services/inner-eye-inference/" class="md-nav__link">
+        InnerEye Inferencing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_3" type="checkbox" id="__nav_6_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6_3">
+          User Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Resources" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          User Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workspace-templates/user-resources/guacamole-win10-vm/" class="md-nav__link">
+        Guacamole Win10 VM
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    Steps
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-and-create-prerequisite-resources" class="md-nav__link">
+    Bootstrap and create prerequisite resources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-variables" class="md-nav__link">
+    Configure variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy" class="md-nav__link">
+    Deploy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#details-of-deployment-and-infrastructure" class="md-nav__link">
+    Details of deployment and infrastructure
+  </a>
+  
+    <nav class="md-nav" aria-label="Details of deployment and infrastructure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#management-infrastructure" class="md-nav__link">
+    Management Infrastructure
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bootstrap-the-back-end-state" class="md-nav__link">
+    Bootstrap the back-end state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#management-resource-deployment" class="md-nav__link">
+    Management Resource Deployment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-push-docker-images" class="md-nav__link">
+    Build and push Docker images
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-the-azure-tre-deployment" class="md-nav__link">
+    Access the Azure TRE deployment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publishing-and-registering-the-base-workspace-bundle" class="md-nav__link">
+    Publishing and registering the base workspace bundle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-base-workspace" class="md-nav__link">
+    Creating a base workspace
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deleting-the-azure-tre-deployment" class="md-nav__link">
+    Deleting the Azure TRE deployment
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="deploying-azure-tre-manually">Deploying Azure TRE manually</h1>
+<p>By following this guide you will deploy a new Azure TRE instance for development and testing purposes.</p>
+<h2 id="steps">Steps</h2>
+<h3 id="bootstrap-and-create-prerequisite-resources">Bootstrap and create prerequisite resources</h3>
+<ol>
+<li>By now you should have a <a href="../../../tre-developers/dev-environment/">developer environment</a> set up</li>
+<li>Create app registrations for auth; follow the <a href="../auth/">Authentication &amp; authorization</a> guide</li>
+</ol>
+<h3 id="configure-variables">Configure variables</h3>
+<p>Before running any of the scripts, the configuration variables need to be set. This is done in an <code>.env</code> file, and this file is read and parsed by the scripts.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The <code>.tfvars</code> file is not used, this is intentional. The <code>.env</code> file format is easier to parse, meaning we can use the values for bash scripts and other purposes.</p>
+</div>
+<ol>
+<li>
+<p>Copy <code>/devops/.env.sample</code> to <code>/devops/.env</code>.</p>
+<div class="highlight"><pre><span></span><code>cp devops/.env.sample devops/.env
+</code></pre></div>
+<p>Then, open the <code>.env</code> file in a text editor and set the values for the required variables described in the table below:</p>
+<table>
+<thead>
+<tr>
+<th>Environment variable name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LOCATION</code></td>
+<td>The Azure location (region) for all resources.</td>
+</tr>
+<tr>
+<td><code>MGMT_RESOURCE_GROUP_NAME</code></td>
+<td>The shared resource group for all management resources, including the storage account.</td>
+</tr>
+<tr>
+<td><code>MGMT_STORAGE_ACCOUNT_NAME</code></td>
+<td>The name of the storage account to hold the Terraform state and other deployment artifacts.</td>
+</tr>
+<tr>
+<td><code>TERRAFORM_STATE_CONTAINER_NAME</code></td>
+<td>The name of the blob container to hold the Terraform state <em>Default value is <code>tfstate</code>.</em></td>
+</tr>
+<tr>
+<td><code>IMAGE_TAG</code></td>
+<td>The default tag for Docker images that will be pushed to the container registry and deployed with the Azure TRE.</td>
+</tr>
+<tr>
+<td><code>ACR_NAME</code></td>
+<td>A globally unique name for the Azure Container Registry (ACR) that will be created to store deployment images.</td>
+</tr>
+<tr>
+<td><code>ARM_SUBSCRIPTION_ID</code></td>
+<td><em>Optional for manual deployment. If not specified the <code>az cli</code> selected subscription will be used.</em> The Azure subscription ID for all resources.</td>
+</tr>
+<tr>
+<td><code>ARM_CLIENT_ID</code></td>
+<td><em>Optional for manual deployment without logged-in credentials.</em> The client whose azure identity will be used to deploy the solution.</td>
+</tr>
+<tr>
+<td><code>ARM_CLIENT_SECRET</code></td>
+<td><em>Optional for manual deployment without logged-in credentials.</em> The password of the client defined in <code>ARM_CLIENT_ID</code>.</td>
+</tr>
+<tr>
+<td><code>ARM_TENANT_ID</code></td>
+<td><em>Optional for manual deployment. If not specified the <code>az cli</code> selected subscription will be used.</em> The AAD tenant of the client defined in <code>ARM_CLIENT_ID</code>.</td>
+</tr>
+<tr>
+<td><code>PORTER_OUTPUT_CONTAINER_NAME</code></td>
+<td>The name of the storage container where to store the workspace/workspace service deployment output. Workspaces and workspace templates are implemented using <a href="https://porter.sh">Porter</a> bundles - hence the name of the variable. The storage account used is the one defined in <code>STATE_STORAGE_ACCOUNT_NAME</code>.</td>
+</tr>
+<tr>
+<td><code>DEBUG</code></td>
+<td>If set to "true" disables purge protection of keyvault.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Copy <code>/templates/core/.env.sample</code> to <code>/templates/core/.env</code> and set values for all variables described in the table below:</p>
+<div class="highlight"><pre><span></span><code>cp templates/core/.env.sample templates/core/.env
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Environment variable name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TRE_ID</code></td>
+<td>A globally unique identifier. <code>TRE_ID</code> can be found in the resource names of the Azure TRE instance; for example, a <code>TRE_ID</code> of <code>mytre-dev-3142</code> will result in a resource group name for Azure TRE instance of <code>rg-mytre-dev-3142</code>. This must be less than 12 characters. Allowed characters: Alphanumeric, underscores, and hyphens.</td>
+</tr>
+<tr>
+<td><code>CORE_ADDRESS_SPACE</code></td>
+<td>The address space for the Azure TRE core virtual network. <code>/22</code> or larger.</td>
+</tr>
+<tr>
+<td><code>TRE_ADDRESS_SPACE</code></td>
+<td>The address space for the whole TRE environment virtual network where workspaces networks will be created (can include the core network as well). E.g. <code>10.0.0.0/12</code></td>
+</tr>
+<tr>
+<td><code>API_IMAGE_TAG</code></td>
+<td>The tag of the API image. Make it the same as <code>IMAGE_TAG</code> above.</td>
+</tr>
+<tr>
+<td><code>RESOURCE_PROCESSOR_VMSS_PORTER_IMAGE_TAG</code></td>
+<td>The tag of the resource processor image. Make it the same as <code>IMAGE_TAG</code> above.</td>
+</tr>
+<tr>
+<td><code>GITEA_IMAGE_TAG</code></td>
+<td>The tag of the Gitea image. Make it the same as <code>IMAGE_TAG</code> above.</td>
+</tr>
+<tr>
+<td><code>SWAGGER_UI_CLIENT_ID</code></td>
+<td>Generated when following auth guide. Client ID for swagger client to make requests.</td>
+</tr>
+<tr>
+<td><code>AAD_TENANT_ID</code></td>
+<td>Generated when following auth guide. Tenant id against which auth is performed.</td>
+</tr>
+<tr>
+<td><code>API_CLIENT_ID</code></td>
+<td>Generated when following auth guide. Client id of the "TRE API".</td>
+</tr>
+<tr>
+<td><code>API_CLIENT_SECRET</code></td>
+<td>Generated when following auth guide. Client secret of the "TRE API".</td>
+</tr>
+<tr>
+<td><code>DEPLOY_GITEA</code></td>
+<td>If set to <code>false</code> disables deployment of the Gitea shared service.</td>
+</tr>
+<tr>
+<td><code>DEPLOY_NEXUS</code></td>
+<td>If set to <code>false</code> disables deployment of the Nexus shared service.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h3 id="deploy">Deploy</h3>
+<p>The deployment of the Azure TRE is done via Terraform. Run:</p>
+<div class="highlight"><pre><span></span><code>make all
+</code></pre></div>
+<p>Once the deployment is complete, you will see a few output parameters which are the result of your deployment.</p>
+<div class="highlight"><pre><span></span><code>app_gateway_name = &quot;agw-&lt;TRE_ID&gt;&quot;
+azure_tre_fqdn = &quot;&lt;TRE_ID&gt;.&lt;LOCATION&gt;.cloudapp.azure.com&quot;
+core_resource_group_name = &quot;rg-&lt;TRE_ID&gt;&quot;
+keyvault_name = &quot;kv-&lt;TRE_ID&gt;&quot;
+log_analytics_name = &quot;log-&lt;TRE_ID&gt;&quot;
+static_web_storage = &quot;stwebaz&lt;TRE_ID&gt;&quot;
+</code></pre></div>
+<p>The Azure TRE is initially deployed with an invalid self-signed SSL certificate. This certificate is stored in the deployed Key Vault and can/should be replaced with one valid for the configured domain name. To use a certificate from <a href="https://letsencrypt.org/" title="A nonprofit Certificate Authority providing TLS certificates to 260 million websites.">Let's Encrypt</a>, simply run the command:</p>
+<div class="highlight"><pre><span></span><code>make letsencrypt
+</code></pre></div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>There are rate limits with Let's Encrypt, so this should not be run when not needed.</p>
+</div>
+<h2 id="details-of-deployment-and-infrastructure">Details of deployment and infrastructure</h2>
+<p>The following section is for informational purposes, and the steps don't need to be executed as they are part of make all above.</p>
+<h3 id="management-infrastructure">Management Infrastructure</h3>
+<p>We will create management infrastructure in your subscription. This includes resources, such as a storage account and container registry that will enable deployment the Azure TRE. Once the infrastructure is deployed we will build the container images required for deployment. The management infrastructure can serve multiple Azure TRE deployments.</p>
+<h3 id="bootstrap-the-back-end-state">Bootstrap the back-end state</h3>
+<p>As a principle, we want all the Azure TRE resources defined in Terraform, including the storage account used by Terraform to hold its back-end state.</p>
+<p>A bootstrap script is used to create the initial storage account and resource group using the Azure CLI. Then Terraform is initialized using this storage account as a back-end, and the storage account imported into the state.</p>
+<p>You can do this step using the following command but as stated above this is already part of <code>make all</code>.</p>
+<div class="highlight"><pre><span></span><code>make bootstrap
+</code></pre></div>
+<p>This script should never need running a second time even if the other management resources are modified.</p>
+<h3 id="management-resource-deployment">Management Resource Deployment</h3>
+<p>The deployment of the rest of the shared management resources is done via Terraform, and the various <code>.tf</code> files in the root of this repo.</p>
+<div class="highlight"><pre><span></span><code>make mgmt-deploy
+</code></pre></div>
+<p>This Terraform creates &amp; configures the following:</p>
+<ul>
+<li>Resource Group (also in bootstrap).</li>
+<li>Storage Account for holding Terraform state (also in bootstrap).</li>
+<li>Azure Container Registry.</li>
+</ul>
+<h3 id="build-and-push-docker-images">Build and push Docker images</h3>
+<p>Build and push the docker images required by the Azure TRE and publish them to the container registry created in the previous step.</p>
+<div class="highlight"><pre><span></span><code>make build-api-image
+make build-resource-processor-vm-porter-image
+make push-api-image
+make push-resource-processor-vm-porter-image
+</code></pre></div>
+<h2 id="access-the-azure-tre-deployment">Access the Azure TRE deployment</h2>
+<p>To get the Azure TRE URL, view <code>azure_tre_fqdn</code> in the output of the previous <code>make all</code> command, or run the following command to see it again:</p>
+<div class="highlight"><pre><span></span><code>cd templates/core/terraform
+terraform output azure_tre_fqdn
+</code></pre></div>
+<p>Open the following URL in a browser, and you should see the Open API docs of Azure TRE API.</p>
+<div class="highlight"><pre><span></span><code>https://&lt;azure_tre_fqdn&gt;/docs
+</code></pre></div>
+<p>You can also create a request to the <code>api/health</code> endpoint to verify that the API is deployed and responds. You should see a <em>pong</em> response as a result of below request.</p>
+<div class="highlight"><pre><span></span><code>curl https://&lt;azure_tre_fqdn&gt;/api/health
+</code></pre></div>
+<h2 id="publishing-and-registering-the-base-workspace-bundle">Publishing and registering the base workspace bundle</h2>
+<ol>
+<li>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>register-bundle DIR=./templates/workspaces/base
+</code></pre></div>
+<p>Copy the resulting payload json.</p>
+</li>
+<li>
+<p>Navigate to the Swagger UI at <code>https://&lt;azure_tre_fqdn&gt;/docs</code></p>
+</li>
+<li>
+<p>Log into the Swagger UI by clicking <code>Authorize</code>, then <code>Authorize</code> again. You will be redirected to the login page.</p>
+</li>
+<li>
+<p>Once logged in. Click <code>Try it out</code> on the <code>POST</code> <code>/api/workspace-templates</code> operation:</p>
+<p><img alt="Post Workspace Template" src="../../../assets/post-template.png" /></p>
+</li>
+<li>
+<p>Paste the payload json generated earlier into the <code>Request body</code> field, then click <code>Execute</code>. Review the server response.</p>
+</li>
+<li>
+<p>To verify registration of the template do <code>GET</code> operation on <code>/api/workspace-templates</code>. The name of the template should now be listed.</p>
+</li>
+</ol>
+<h2 id="creating-a-base-workspace">Creating a base workspace</h2>
+<p>Now that we have published and registered a base workspace bundle we can use the deployed API to create a base workspace.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>All routes are auth protected. Click the green <strong>Authorize</strong> button to receive a token for swagger client.  </p>
+</div>
+<p>As explained in the <a href="../auth/">auth guide</a>, every workspace has a corresponding app registration which can be created using the helper script <code>/scripts/workspace-app-reg.py</code>. Multiple workspaces can share an app registration.</p>
+<p>Running the script will report app id of the generated app which needs to be used in the POST body below.</p>
+<p>Go to <code>azure_tre_fqdn/docs</code> and use POST /api/workspaces with the sample body to create a base workspace.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;manual-from-swagger&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;workspace for team X&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;workspaceType&quot;</span><span class="p">:</span> <span class="s2">&quot;tre-workspace-base&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="nt">&quot;authConfig&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;AAD&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;app_id&quot;</span><span class="p">:</span> <span class="s2">&quot;app id created above&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The API will report the <code>workspace_id</code> of the created workspace, which can be used to query deployment status by using <code>/api/workspaces/&lt;workspace_id&gt;</code></p>
+<p>You can also follow the progress in Azure portal as various resources come up.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To query the status using the API your user needs to have TREResearcher or TREOwner role assigned to the app.</p>
+</div>
+<h2 id="deleting-the-azure-tre-deployment">Deleting the Azure TRE deployment</h2>
+<p>To remove the Azure TRE and its resources from your Azure subscription run:</p>
+<div class="highlight"><pre><span></span><code>make tre-destroy
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../bootstrapping/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Bootstrapping" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Bootstrapping
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../workflows/" class="md-footer__link md-footer__link--next" aria-label="Next: Workflow Deployment" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Workflow Deployment
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.indexes"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.4fc53ad4.min.js"></script>
+      
+    
+  </body>
+</html>
